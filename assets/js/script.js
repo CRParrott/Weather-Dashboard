@@ -1,15 +1,7 @@
-function searchResults(resultObj){
-    var city = resultObj.city;
-
-    var resultDiv = document.createElement('h3');
-    resultDiv.textContent = city;
-
-    var resultContent = document.getElementById("city-result");
-    resultContent.append(resultDiv);
-}
-
+//This function uses the city typed in to call the api
 $("#search-form").on("submit", function(event) {
     event.preventDefault()
+    
     var searchInput = $("#search-input").val();
 
     console.log(searchInput);
@@ -18,11 +10,14 @@ $("#search-form").on("submit", function(event) {
 });
 
 function searchCity(searchInput) {
+    var apiKey = "1730c9943ea62e56c9d2f25373fe95ea";
+    var q = searchInput;
+    var query1 = "https://api.openweathermap.org/data/2.5/weather?q=" +q +"&appid="+apiKey+"units=imperial";
+    
     $.ajax({
-        url:"api.openweathermap.org/data/2.5/weather?q={city name}&appid=1730c9943ea62e56c9d2f25373fe95ea" + searchInput,
-        method: "Get"
-    }).then(function (apiResponse) {
-        console.log(apiResponse);
-        searchResults(apiResponse)
-    })
+        url:query1,
+        method:"GET"
+    }).done (function(response) {
+        console.log(response);
+    });
 }
